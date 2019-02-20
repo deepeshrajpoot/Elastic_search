@@ -48,7 +48,7 @@ class ArticlesController < ApplicationController
 
   def autocomplete
     render json: Article.search(params[:query], {
-      fields: ["title", "text"],
+      fields: ["title^5", "text"],
       match: :word_start,
       limit: 10,
       load: false,
