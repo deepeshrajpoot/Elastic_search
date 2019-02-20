@@ -13,5 +13,5 @@
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
+//= require typeahead.bundle
 //= require_tree .
-//= require typeahead

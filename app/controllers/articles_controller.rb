@@ -4,7 +4,7 @@ class ArticlesController < ApplicationController
      Article.search(params[:query])
    else
     Article.all
-   end
+   end  
  end
  
   def show
@@ -47,11 +47,15 @@ class ArticlesController < ApplicationController
   end
 
   def autocomplete
-    render json: Article.search(params[:query], autocomplete: false, limit: 10).map do |book|
-      { title: book.title, value: book.id }
-    end
-  end
-
+    render json: Article.search(params[:query], {
+      fields: ["title", "text"],
+      match: :word_start,
+      limit: 10,
+      load: false,
+      misspellings: {below: 5}
+    }).map(&:title)
+ end
+ 
   private
   def article_params
     params.require(:article).permit(:title, :text)
